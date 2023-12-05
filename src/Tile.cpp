@@ -1,7 +1,7 @@
 #include "Tile.h"
 
 // Constructor
-Tile::Tile(TileType& type, int gridRow, int gridCol)
+Tile::Tile(TileType type, int gridRow, int gridCol)
     : type(type), gridRow(gridRow), gridCol(gridCol), match(false), alpha(255), position(0, 0), target(0, 0), velocity(0, 0) {
     // Initialization logic (if needed)
 }
