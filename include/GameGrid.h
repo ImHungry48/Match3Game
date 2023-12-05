@@ -16,10 +16,12 @@ public:
 
     // Match checking and clearing
     void FindMatches();
-    void ClearMatches();
+    bool ClearMatches();
 
     // Grid updating
     void UpdateGrid();
+    void GameGrid::ShiftTilesDown();
+    void GameGrid::GenerateNewTiles();
 
     // Utility functions
     bool IsMovePossible() const;

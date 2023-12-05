@@ -57,16 +57,18 @@ void GameGrid::FindMatches() {
 }
 
 // Clears matched tiles from the grid
-void GameGrid::ClearMatches() {
+bool GameGrid::ClearMatches() {
+    bool cleared = false;
     for (int row = 0; row < height; row++) {
         for (int col = 0; col < width; col++) {
             if (grid[row][col].IsMatch()) {
                 grid[row][col].SetAlpha(0);
                 grid[row][col].SetMatch(false);
-                // TODO: Choose a default tile type
+                cleared = true;
             }
         }
     }
+    return cleared;
 }
 
 // Updates the grid after clearing matches
@@ -116,4 +118,25 @@ bool GameGrid::CheckForInitialMatches(int row, int col, TileType type) const {
         return true; // Vertical match found
     }
     return false; // No match found
+}
+
+void GameGrid::ShiftTilesDown() {
+    for (int col = 0; col < width; col++) {
+        for (int row = height - 1; row > 0; row--) {
+            if (grid[row][col].GetAlpha() == 0) {
+                for (int n = row; n > 0; n--) {
+                    SwapTiles(n, col, n - 1, col);
+                }
+            }
+        }
+    }
+}
+
+void GameGrid::GenerateNewTiles() {
+    for (int col = 0; col < width; col++) {
+        if (grid[0][col].GetAlpha() == 0) { // Check if the top tile in the column is cleared
+            grid[0][col] = Tile(GenerateRandomType(), 0, col);
+            grid[0][col].SetAlpha(255); // Reset alpha to opaque
+        }
+    }
 }

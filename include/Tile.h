@@ -10,7 +10,7 @@ enum class TileType {
 class Tile {
 public:
     // Constructors
-    Tile(TileType& type, int gridRow, int gridCol);
+    Tile(TileType type, int gridRow, int gridCol);
 
     // Destructor
     ~Tile();

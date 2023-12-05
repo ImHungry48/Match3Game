@@ -26,7 +26,7 @@ private:
     sf::Sprite background, tileSprite;
 
     // Game state variables
-    bool isSwap, isMoving;
+    bool isSwap, isMoving, isMatchFound;
 
     // Variables for tile selection and tile swapping
     bool isTileSelected;
@@ -42,6 +42,8 @@ private:
     void SelectTile(int row, int col); // Handles tile selection
     void TrySwapTiles(); // Attempts to swap two selected tiles
 
+    // Game over logic
+    void ResetGame();
 
 };
 

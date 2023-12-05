@@ -4,7 +4,7 @@ Match3Game::Match3Game(int gridWidth, int gridHeight, int tileSize)
     : gameGrid(gridWidth, gridHeight), tileSize(tileSize), 
       gridWidth(gridWidth), gridHeight(gridHeight),
       window(sf::VideoMode(gridWidth * tileSize, gridHeight * tileSize), "Match-3 Game!"),
-      isSwap(false), isMoving(false) {
+      isSwap(false), isMoving(false), isMatchFound(false){
 
     backgroundTexture.loadFromFile(""); // TODO: Insert file path
     tileTexture.loadFromFile(""); // TODO: Insert file path
@@ -65,19 +65,51 @@ void Match3Game::TrySwapTiles() {
         gameGrid.SwapTiles(selectedRow, selectedCol, swapRow, swapCol);
 
         // TODO: Add logic to handle matches, animations, etc., after swapping
+        
     }
 }
 
 void Match3Game::UpdateGame() {
-    gameGrid.FindMatches(); // Find and mark matches in the grid
-    gameGrid.ClearMatches(); // Clear matched tiles
+    bool animationInProgress = false;
 
-    // TODO: Add loop that calls gameGrid.UpdateGrid() so tiles settle
+    // Animate each tile
+    for (int i = 0; i < gridHeight; i++) {
+        for (int j = 0; j < gridWidth; j++) {
+            Tile& tile = gameGrid.GetTile(i, j);
+            tile.UpdatePosition();
 
-    // Check if the player needs to make a move or if the game is over
-    if (!gameGrid.IsMovePossible()) {
-        // TODO: Handle game over or reset the grid
+            if (tile.IsAnimating()) {
+                animationInProgress = true;
+            }
+        }
     }
+    
+    // If animations are finished, handle matches and update the grid
+    if (!animationInProgress) {
+        if (isSwap || isMatchFound) {
+            gameGrid.FindMatches();  // Check for new matches
+            bool matchesCleared = gameGrid.ClearMatches();  // Clear matches and check if any were cleared
+
+            if (matchesCleared) {
+                // If matches were cleared, shift tiles down and generate new tiles
+                gameGrid.ShiftTilesDown();
+                gameGrid.GenerateNewTiles();
+            } else if (isSwap) {
+                // If no matches after a swap, it might be a game over condition or swap back
+                if (!gameGrid.IsMovePossible()) {
+                    // Handle game over
+                    ResetGame();  // or any other game over logic
+                } else {
+                    // Swap the tiles back if no match was found
+                    gameGrid.SwapTiles(selectedRow, selectedCol, swapRow, swapCol);
+                }
+                isSwap = false;
+            }
+
+            isMatchFound = false;  // Reset match found flag
+        }
+    }
+    
 }
 
 void Match3Game::Render() {
@@ -85,16 +117,20 @@ void Match3Game::Render() {
     window.draw(background);
     // Draw tiles and other game elements
 
-    for (int i = 1; i <= gridHeight; i++) {
-        for (int j = 1; j <= gridWidth; j++) {
-            Tile& tile = gameGrid.GetTile(i - 1, j - 1);
+    for (int i = 0; i < gridHeight; i++) {
+        for (int j = 0; j < gridWidth; j++) {
+            Tile& tile = gameGrid.GetTile(i, j);
+            sf::Vector2f screenPos = tile.GetScreenPosition();
 
             tileSprite.setTextureRect(sf::IntRect(static_cast<int>(tile.GetType()) * tileSize, 0, tileSize, tileSize));
             tileSprite.setColor(sf::Color(255, 255, 255, tile.GetAlpha())); // Set alpha for fading effect
-            tileSprite.setPosition((j - 1) * tileSize, (i - 1) * tileSize);
-            tileSprite.move(offset.x, offset.y); // Adjust for any offset
+            tileSprite.setPosition(screenPos);
             window.draw(tileSprite);
         }
     }
     window.display();
+}
+
+void Match3Game::ResetGame() {
+    // TODO: Implement me!
 }
