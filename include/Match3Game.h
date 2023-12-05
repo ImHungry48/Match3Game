@@ -16,6 +16,8 @@ private:
     sf:: RenderWindow window;
 
     // TODO: SFML Resources
+    // ?? sf::Texture backgroundTexture, tileTexture;
+    // ?? sf::Sprite background, tileSprite;
 
     // Game state variables
     int selectedRow, selectedCol;
@@ -26,7 +28,7 @@ private:
     void UpdateGame();
     void Render();
 
-    
+
 };
 
 #endif // MATCH3GAME_H
