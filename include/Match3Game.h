@@ -18,6 +18,9 @@ private:
     sf::Vector2i offset;
     sf:: RenderWindow window;
 
+    // Grid dimensions
+    int gridWidth, gridHeight;
+
     // SFML Resources
     sf::Texture backgroundTexture, tileTexture;
     sf::Sprite background, tileSprite;
