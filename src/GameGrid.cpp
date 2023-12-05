@@ -35,7 +35,7 @@ void GameGrid::SwapTiles(int row1, int col1, int row2, int col2) {
 void GameGrid::FindMatches() {
     for (int row = 0; row < height; row++) {
         for (int col = 0; col < width; col++) {
-            // Check for horizaontal matches
+            // Check for horizontal matches
             if (col > 1 &&
                 grid[row][col].GetType() == grid[row][col - 1].GetType() &&
                 grid[row][col].GetType() == grid[row][col - 2].GetType()) {
