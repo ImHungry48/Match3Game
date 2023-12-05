@@ -36,7 +36,7 @@ void Match3Game::UpdateGame() {
 
 void Match3Game::Render() {
     window.clear();
-    window.draw(background):
+    window.draw(background);
     // Draw tiles and other game elements
     window.display();
 }
