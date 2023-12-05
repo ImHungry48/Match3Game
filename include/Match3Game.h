@@ -6,7 +6,10 @@
 
 class Match3Game {
 public:
+    // Constructor
     Match3Game(int gridWidth, int gridHeight, int tileSize);
+    
+    // Start game loop
     void Run();
 
 private:
@@ -20,13 +23,21 @@ private:
     sf::Sprite background, tileSprite;
 
     // Game state variables
-    int selectedRow, selectedCol;
     bool isSwap, isMoving;
 
+    // Variables for tile selection and tile swapping
+    bool isTileSelected;
+    int selectedRow, selectedCol;
+    int swapRow, swapCol;
+
     // Private methods for game logic
-    void ProcessInput();
-    void UpdateGame();
-    void Render();
+    void ProcessInput(); // Handles player input
+    void UpdateGame(); // Updates the game state
+    void Render(); // Renders the game
+
+    // Methods for tile selection and swapping
+    void SelectTile(int row, int col); // Handles tile selection
+    void TrySwapTiles(); // Attempts to swap two selected tiles
 
 
 };
