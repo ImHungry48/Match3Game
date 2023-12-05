@@ -16,7 +16,7 @@ public:
 
     // Match checking and clearing
     void FindMatches();
-    bool ClearMatches();
+    int ClearMatches();
 
     // Grid updating
     void UpdateGrid();

@@ -3,6 +3,7 @@
 
 #include "GameGrid.h"
 #include <SFML/Graphics.hpp>
+#include <SFML/Window.hpp>
 
 class Match3Game {
 public:
@@ -33,6 +34,9 @@ private:
     int selectedRow, selectedCol;
     int swapRow, swapCol;
 
+    // Tracking score
+    int score;
+
     // Private methods for game logic
     void ProcessInput(); // Handles player input
     void UpdateGame(); // Updates the game state
@@ -42,8 +46,14 @@ private:
     void SelectTile(int row, int col); // Handles tile selection
     void TrySwapTiles(); // Attempts to swap two selected tiles
 
-    // Game over logic
+    // Methods for calculating and the score
+    int CalculateScore(int matchesCleared);
+    void DisplayScore();
+
+    // "Game Over" logic
     void ResetGame();
+    void DisplayGameOverMessage();
+    void ResetGameState();
 
 };
 

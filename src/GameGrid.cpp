@@ -57,18 +57,18 @@ void GameGrid::FindMatches() {
 }
 
 // Clears matched tiles from the grid
-bool GameGrid::ClearMatches() {
-    bool cleared = false;
+int GameGrid::ClearMatches() {
+    int clearedCount = 0;
     for (int row = 0; row < height; row++) {
         for (int col = 0; col < width; col++) {
             if (grid[row][col].IsMatch()) {
                 grid[row][col].SetAlpha(0);
                 grid[row][col].SetMatch(false);
-                cleared = true;
+                clearedCount++;
             }
         }
     }
-    return cleared;
+    return clearedCount;
 }
 
 // Updates the grid after clearing matches
