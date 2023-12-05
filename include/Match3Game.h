@@ -15,9 +15,9 @@ private:
     sf::Vector2i offset;
     sf:: RenderWindow window;
 
-    // TODO: SFML Resources
-    // ?? sf::Texture backgroundTexture, tileTexture;
-    // ?? sf::Sprite background, tileSprite;
+    // SFML Resources
+    sf::Texture backgroundTexture, tileTexture;
+    sf::Sprite background, tileSprite;
 
     // Game state variables
     int selectedRow, selectedCol;
