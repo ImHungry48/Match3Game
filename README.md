@@ -16,6 +16,7 @@ A simple Match-3 style game implemented in C++ using the SFML Library.
 
 **Class:** `Tile`
 **Description:** Represents an individual tile on the game grid
+
 **Features:**
 - Holds information about the type, position, and matching state
 - Supports animations for tile movement and interaction
@@ -32,6 +33,7 @@ A simple Match-3 style game implemented in C++ using the SFML Library.
 
 **Class:** `Match3Game`
 **Description:** Main class that handles the game logic and user interface
+
 **Features:**
 - Manages the game loop and processes user input
 - Renders game state
