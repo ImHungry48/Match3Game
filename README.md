@@ -22,6 +22,7 @@ A simple Match-3 style game implemented in C++ using the SFML Library.
 
 **Class:** `GameGrid`
 **Description:** Represents the game grid where all the tiles are placed and interacted with by the player
+
 **Features:**
 - Initializes the grid with random tiles
 - Provides functionality for swapping tiles
