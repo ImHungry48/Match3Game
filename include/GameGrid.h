@@ -13,6 +13,8 @@ public:
 
     // Swap functionality
     void SwapTiles(int row1, int col1, int row2, int col2);
+    bool IsSwapMatch(int row1, int col1, int row2, int col2) const;
+    bool CheckForMatchesAfterSwap(const std::vector<std::vector<Tile>>& gridCopy) const;
 
     // Match checking and clearing
     void FindMatches();

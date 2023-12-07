@@ -41,6 +41,9 @@ public:
     // Swap functionality
     void Swap(Tile& other);
 
+    // Assignment operator
+    Tile& operator=(const Tile& other);
+
 private:
     TileType type; // Piece type on tile
     int gridRow, gridCol; // Position in the grid

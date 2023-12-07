@@ -31,6 +31,20 @@ void GameGrid::SwapTiles(int row1, int col1, int row2, int col2) {
     grid[row2][col2].SetPosition(row2, col2);
 }
 
+bool GameGrid::IsSwapMatch(int row1, int col1, int row2, int col2) const {
+    // Create a copy of the current grid to test the swap
+    std::vector<std::vector<Tile>> gridCopy = grid;
+
+    // Swap tiles in the copy
+    std::swap(gridCopy[row1][col1], gridCopy[row2][col2]);
+
+    // Check for matches in the copied grid
+    bool match = CheckForMatchesAfterSwap(gridCopy);
+
+    // No need to swap back since we are working with a copy
+    return match;
+}
+
 // Find and marks matching tiles (three of same type in rows and columns)
 void GameGrid::FindMatches() {
     for (int row = 0; row < height; row++) {
@@ -91,7 +105,53 @@ void GameGrid::UpdateGrid() {
 
 // Stub function to determine if any moves are possible that would result in a match
 bool GameGrid::IsMovePossible() const {
-    return true; // TODO: Implement comprehensive logic to check for possible moves
+    for (int row = 0; row < height; row++) {
+        for (int col = 0; col < width; col++) {
+            // Check horizontal swap possibility
+            if (col < width - 1) {
+                // Swap and check for a match
+                bool match = IsSwapMatch(row, col, row, col + 1);
+
+                if (match) return true;
+            }
+
+            // Check vertical swap possibility
+            if (row < height - 1) {
+                // Swap and check for a match
+                bool match = IsSwapMatch(row, col, row, col + 1);
+
+                if (match) return true;
+            }
+        }
+    }
+
+    return false;
+}
+
+bool GameGrid::CheckForMatchesAfterSwap(const std::vector<std::vector<Tile>>& gridCopy) const {
+    for (int row = 0; row < height; row++) {
+        for (int col = 0; col < width; col++) {
+            TileType currentType = gridCopy[row][col].GetType();
+
+            // Check for horizontal match
+            if (col <= width - 3) {
+                if (currentType == gridCopy[row][col + 1].GetType() && 
+                    currentType == gridCopy[row][col + 2].GetType()) {
+                    return true;
+                }
+            }
+
+            // Check for vertical match
+            if (row <= height - 3) {
+                if (currentType == gridCopy[row + 1][col].GetType() && 
+                    currentType == gridCopy[row + 2][col].GetType()) {
+                    return true;
+                }
+            }
+        }
+    }
+    return false; // No match found
+
 }
 
 // Returns a reference to the tile at a given position in the grid

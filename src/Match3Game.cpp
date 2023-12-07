@@ -59,14 +59,26 @@ void Match3Game::SelectTile(int row, int col) {
 }
 
 void Match3Game::TrySwapTiles() {
-    // Check if the selected tiels are adjacent
+    // Check if the selected tiles are adjacent
     if ((abs(selectedRow - swapRow) == 1 && selectedCol == swapCol) || 
         (abs(selectedCol - swapCol) == 1 && selectedRow == swapRow)) {
         // Perform the swap
         gameGrid.SwapTiles(selectedRow, selectedCol, swapRow, swapCol);
+        isSwap = true;
 
-        // TODO: Add logic to handle matches, animations, etc., after swapping
-        
+        // Check for matches
+        gameGrid.FindMatches();
+        int matchesCleared = gameGrid.ClearMatches(); // Clear matches and check if any were cleared
+
+        if (matchesCleared > 0) {
+            isMatchFound = true;
+            score += CalculateScore(matchesCleared); // Update the score
+            gameGrid.UpdateGrid(); // Update grid to fill cleared spaces
+        } else {
+            // Reverse swap if no match was found
+            gameGrid.SwapTiles(selectedRow, selectedCol, swapRow, swapCol);
+            isSwap = false;
+        }
     }
 }
 

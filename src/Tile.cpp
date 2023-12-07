@@ -43,6 +43,20 @@ bool Tile::IsMatch() const {
     return match;
 }
 
+Tile& Tile::operator=(const Tile& other) {
+    if (this != &other) {
+        type = other.type;
+        gridRow = other.gridRow;
+        gridCol = other.gridCol;
+        position = other.position;
+        target = other.target;
+        velocity = other.velocity;
+        match = other.match;
+        alpha = other.alpha;
+    }
+    return *this;
+}
+
 void Tile::SetAlpha(int alpha) {
     this->alpha = alpha;
 }
